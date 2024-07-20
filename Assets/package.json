@@ -1,0 +1,7 @@
+{
+    "description": "Requester base on UnityWebRequest to get post and download.",
+    "displayName": "Web Requester",
+    "name": "com.mgs.webrequester",
+    "unity": "2021.3",
+    "version": "1.0.0"
+}
