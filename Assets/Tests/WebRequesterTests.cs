@@ -25,7 +25,7 @@ public class WebRequesterTests
         var requester = WebRequester.Handler.GetRequest(url, 120);
         requester.OnProgress += Requester_OnProgress;
         requester.OnComplete += Requester_OnComplete;
-        while (!requester.isDone)
+        while (!requester.IsDone)
         {
             yield return null;
         }
@@ -38,7 +38,7 @@ public class WebRequesterTests
         var requester = WebRequester.Handler.PostRequest(url, new byte[0], 120);
         requester.OnProgress += Requester_OnProgress;
         requester.OnComplete += Requester_OnComplete;
-        while (!requester.isDone)
+        while (!requester.IsDone)
         {
             yield return null;
         }
@@ -52,7 +52,7 @@ public class WebRequesterTests
         var requester = WebRequester.Handler.FileRequest(url, 120, path);
         requester.OnProgress += Requester_OnProgress;
         requester.OnComplete += Requester_OnComplete;
-        while (!requester.isDone)
+        while (!requester.IsDone)
         {
             yield return null;
         }
