@@ -82,6 +82,7 @@ namespace MGS.WebRequest
                 Error = success ? default : new Exception(request.error);
                 isDone = true;
             }
+            request = null;
             OnComplete?.Invoke(Result, Error);
         }
 
@@ -90,6 +91,7 @@ namespace MGS.WebRequest
         public void Abort()
         {
             request?.Abort();
+            request = null;
         }
     }
 }
