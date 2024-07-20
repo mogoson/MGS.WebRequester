@@ -23,7 +23,7 @@ namespace MGS.WebRequest
 
         public int TimeOut { set; get; }
 
-        public bool isDone { protected set; get; }
+        public bool IsDone { protected set; get; }
 
         public T Result { protected set; get; }
 
@@ -67,7 +67,7 @@ namespace MGS.WebRequest
 
         public IEnumerator Send()
         {
-            isDone = false;
+            IsDone = false;
 
             using (request = CreateWebRequest(Url, headers))
             {
@@ -80,7 +80,7 @@ namespace MGS.WebRequest
                 var success = request.result == UnityWebRequest.Result.Success;
                 Result = success ? ReadResult(request) : default;
                 Error = success ? default : new Exception(request.error);
-                isDone = true;
+                IsDone = true;
             }
             request = null;
             OnComplete?.Invoke(Result, Error);

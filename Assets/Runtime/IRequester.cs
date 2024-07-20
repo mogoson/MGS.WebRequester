@@ -21,7 +21,7 @@ namespace MGS.WebRequest
 
         int TimeOut { set; get; }
 
-        bool isDone { get; }
+        bool IsDone { get; }
 
         T Result { get; }
 
