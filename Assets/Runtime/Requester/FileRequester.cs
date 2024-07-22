@@ -28,6 +28,12 @@ namespace MGS.WebRequest
 
         protected override string ReadResult(UnityWebRequest request)
         {
+            var dir = Path.GetDirectoryName(path);
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+
             File.WriteAllBytes(path, request.downloadHandler.data);
             return path;
         }
