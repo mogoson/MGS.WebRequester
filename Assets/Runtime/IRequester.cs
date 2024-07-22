@@ -31,8 +31,8 @@ namespace MGS.WebRequest
 
         event Action<T, Exception> OnComplete;
 
-        IEnumerator Send();
+        IEnumerator ExecuteAsync();
 
-        void Abort();
+        void AbortAsync();
     }
 }

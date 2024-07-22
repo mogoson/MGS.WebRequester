@@ -65,7 +65,7 @@ namespace MGS.WebRequest
             }
         }
 
-        public IEnumerator Send()
+        public IEnumerator ExecuteAsync()
         {
             IsDone = false;
 
@@ -88,7 +88,7 @@ namespace MGS.WebRequest
 
         protected abstract T ReadResult(UnityWebRequest request);
 
-        public void Abort()
+        public void AbortAsync()
         {
             request?.Abort();
             request = null;

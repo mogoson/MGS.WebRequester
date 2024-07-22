@@ -29,21 +29,21 @@ namespace MGS.WebRequest
         public IRequester<string> FileRequest(string url, int timeOut, string path, IDictionary<string, string> headers = null)
         {
             var requester = new FileRequester(url, timeOut, path, headers);
-            StartCoroutine(requester.Send());
+            StartCoroutine(requester.ExecuteAsync());
             return requester;
         }
 
         public IRequester<string> GetRequest(string url, int timeOut, IDictionary<string, string> headers = null)
         {
             var requester = new GetRequester(url, timeOut, headers);
-            StartCoroutine(requester.Send());
+            StartCoroutine(requester.ExecuteAsync());
             return requester;
         }
 
         public IRequester<string> PostRequest(string url, byte[] data, int timeOut, IDictionary<string, string> headers = null)
         {
             var requester = new PostRequester(url, data, timeOut, headers);
-            StartCoroutine(requester.Send());
+            StartCoroutine(requester.ExecuteAsync());
             return requester;
         }
     }
