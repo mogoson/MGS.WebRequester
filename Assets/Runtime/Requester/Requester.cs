@@ -30,16 +30,27 @@ namespace MGS.WebRequest
         public Exception Error { protected set; get; }
 
         public event Action<float> OnProgress;
-        public event Action<T, Exception> OnComplete;
+        public event Action<T, Exception> OnRespond;
 
-        IDictionary<string, string> headers;
+        protected IDictionary<string, string> headers;
         protected UnityWebRequest request;
+        protected bool isSSE;
 
         public Requester(string url, int timeOut, IDictionary<string, string> headers = null)
         {
             Url = url;
             TimeOut = timeOut;
             this.headers = headers;
+            isSSE = CheckSSE(headers);
+        }
+
+        protected bool CheckSSE(IDictionary<string, string> headers)
+        {
+            if (headers == null || !headers.ContainsKey(Headers.KEY_ACCEPT))
+            {
+                return false;
+            }
+            return headers[Headers.KEY_ACCEPT] == Headers.VALUE_ACCEPT_TES;
         }
 
         protected virtual UnityWebRequest CreateWebRequest(string url, IDictionary<string, string> headers = null)
@@ -74,7 +85,7 @@ namespace MGS.WebRequest
                 var operate = request.SendWebRequest();
                 while (!operate.isDone)
                 {
-                    OnProgress?.Invoke(operate.progress);
+                    OnAsyncOperate(operate);
                     yield return null;
                 }
                 var success = request.result == UnityWebRequest.Result.Success;
@@ -83,7 +94,17 @@ namespace MGS.WebRequest
                 IsDone = true;
             }
             request = null;
-            OnComplete?.Invoke(Result, Error);
+            OnRespond?.Invoke(Result, Error);
+        }
+
+        protected virtual void OnAsyncOperate(UnityWebRequestAsyncOperation operation)
+        {
+            OnProgress?.Invoke(operation.progress);
+            if (isSSE)
+            {
+                Result = ReadResult(operation.webRequest);
+                OnRespond?.Invoke(Result, null);
+            }
         }
 
         protected abstract T ReadResult(UnityWebRequest request);

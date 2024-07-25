@@ -29,7 +29,7 @@ namespace MGS.WebRequest
 
         event Action<float> OnProgress;
 
-        event Action<T, Exception> OnComplete;
+        event Action<T, Exception> OnRespond;
 
         IEnumerator ExecuteAsync();
 
