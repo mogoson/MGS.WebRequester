@@ -24,7 +24,7 @@ public class WebRequesterTests
         var url = "https://github.com";
         var requester = WebRequester.Handler.GetRequest(url, 120);
         requester.OnProgress += Requester_OnProgress;
-        requester.OnRespond += Requester_OnComplete;
+        requester.OnComplete += Requester_OnComplete;
         while (!requester.IsDone)
         {
             yield return null;
@@ -37,7 +37,7 @@ public class WebRequesterTests
         var url = "https://github.com";
         var requester = WebRequester.Handler.PostRequest(url, new byte[0], 120);
         requester.OnProgress += Requester_OnProgress;
-        requester.OnRespond += Requester_OnComplete;
+        requester.OnComplete += Requester_OnComplete;
         while (!requester.IsDone)
         {
             yield return null;
@@ -51,7 +51,7 @@ public class WebRequesterTests
         var path = $"{Application.persistentDataPath}/Tests/github.html";
         var requester = WebRequester.Handler.FileRequest(url, 120, path);
         requester.OnProgress += Requester_OnProgress;
-        requester.OnRespond += Requester_OnComplete;
+        requester.OnComplete += Requester_OnComplete;
         while (!requester.IsDone)
         {
             yield return null;
@@ -62,16 +62,16 @@ public class WebRequesterTests
     {
         if (error == null)
         {
-            Debug.Log($"result：{result}");
+            Debug.Log($"result: {result}");
         }
         else
         {
-            Debug.LogError($"error：{error.Message}");
+            Debug.LogError($"error: {error.Message}");
         }
     }
 
-    private void Requester_OnProgress(float progress)
+    private void Requester_OnProgress(float progress, string result)
     {
-        Debug.Log($"progress：{progress}");
+        Debug.Log($"progress: {progress} result: {result}");
     }
 }

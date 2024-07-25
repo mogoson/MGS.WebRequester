@@ -29,8 +29,8 @@ namespace MGS.WebRequest
 
         public Exception Error { protected set; get; }
 
-        public event Action<float> OnProgress;
-        public event Action<T, Exception> OnRespond;
+        public event Action<float, T> OnProgress;
+        public event Action<T, Exception> OnComplete;
 
         protected IDictionary<string, string> headers;
         protected UnityWebRequest request;
@@ -94,17 +94,16 @@ namespace MGS.WebRequest
                 IsDone = true;
             }
             request = null;
-            OnRespond?.Invoke(Result, Error);
+            OnComplete?.Invoke(Result, Error);
         }
 
         protected virtual void OnAsyncOperate(UnityWebRequestAsyncOperation operation)
         {
-            OnProgress?.Invoke(operation.progress);
             if (isSSE)
             {
                 Result = ReadResult(operation.webRequest);
-                OnRespond?.Invoke(Result, null);
             }
+            OnProgress?.Invoke(operation.progress, Result);
         }
 
         protected abstract T ReadResult(UnityWebRequest request);

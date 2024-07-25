@@ -27,9 +27,9 @@ namespace MGS.WebRequest
 
         Exception Error { get; }
 
-        event Action<float> OnProgress;
+        event Action<float, T> OnProgress;
 
-        event Action<T, Exception> OnRespond;
+        event Action<T, Exception> OnComplete;
 
         IEnumerator ExecuteAsync();
 
