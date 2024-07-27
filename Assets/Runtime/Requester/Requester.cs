@@ -88,12 +88,16 @@ namespace MGS.WebRequest
                     OnAsyncOperate(operate);
                     yield return null;
                 }
-                var success = request.result == UnityWebRequest.Result.Success;
-                Result = success ? ReadResult(request) : default;
-                Error = success ? default : new Exception(request.error);
+                var success = operate.webRequest.result == UnityWebRequest.Result.Success;
+                Result = success ? ReadResult(operate.webRequest) : default;
+                Error = success ? default : new Exception(operate.webRequest.error);
                 IsDone = true;
             }
-            OnComplete?.Invoke(Result, Error);
+            if (request != null)
+            {
+                request = null;
+                OnComplete?.Invoke(Result, Error);
+            }
         }
 
         protected virtual void OnAsyncOperate(UnityWebRequestAsyncOperation operation)
@@ -110,6 +114,7 @@ namespace MGS.WebRequest
         public void AbortAsync()
         {
             request?.Abort();
+            request = null;
         }
     }
 }

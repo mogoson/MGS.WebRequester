@@ -22,7 +22,7 @@ public class WebRequesterTests
     public IEnumerator GetRequestTest()
     {
         var url = "https://github.com";
-        var requester = WebRequester.Handler.GetRequest(url, 120);
+        var requester = WebRequester.Handler.GetRequestAsync(url, 120);
         requester.OnProgress += Requester_OnProgress;
         requester.OnComplete += Requester_OnComplete;
         while (!requester.IsDone)
@@ -35,7 +35,7 @@ public class WebRequesterTests
     public IEnumerator PostRequestTest()
     {
         var url = "https://github.com";
-        var requester = WebRequester.Handler.PostRequest(url, new byte[0], 120);
+        var requester = WebRequester.Handler.PostRequestAsync(url, new byte[0], 120);
         requester.OnProgress += Requester_OnProgress;
         requester.OnComplete += Requester_OnComplete;
         while (!requester.IsDone)
@@ -49,7 +49,7 @@ public class WebRequesterTests
     {
         var url = "https://github.com";
         var path = $"{Application.persistentDataPath}/Tests/github.html";
-        var requester = WebRequester.Handler.FileRequest(url, 120, path);
+        var requester = WebRequester.Handler.FileRequestAsync(url, 120, path);
         requester.OnProgress += Requester_OnProgress;
         requester.OnComplete += Requester_OnComplete;
         while (!requester.IsDone)

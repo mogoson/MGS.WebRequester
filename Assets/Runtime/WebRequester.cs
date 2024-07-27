@@ -19,6 +19,8 @@ namespace MGS.WebRequest
     {
         public static IWebRequester Handler { get; }
 
+        protected IDictionary<IRequester, Coroutine> requesters = new Dictionary<IRequester, Coroutine>();
+
         static WebRequester()
         {
             var handlerGo = new GameObject("WebRequester");
@@ -26,25 +28,53 @@ namespace MGS.WebRequest
             Handler = handlerGo.AddComponent<WebRequester>();
         }
 
-        public IRequester<string> FileRequest(string url, int timeOut, string path, IDictionary<string, string> headers = null)
+        public IRequester<string> FileRequestAsync(string url, int timeOut, string path, IDictionary<string, string> headers = null)
         {
             var requester = new FileRequester(url, timeOut, path, headers);
-            StartCoroutine(requester.ExecuteAsync());
+            requester.OnComplete += (r, e) => requesters.Remove(requester);
+
+            var routine = StartCoroutine(requester.ExecuteAsync());
+            requesters.Add(requester, routine);
             return requester;
         }
 
-        public IRequester<string> GetRequest(string url, int timeOut, IDictionary<string, string> headers = null)
+        public IRequester<string> GetRequestAsync(string url, int timeOut, IDictionary<string, string> headers = null)
         {
             var requester = new GetRequester(url, timeOut, headers);
-            StartCoroutine(requester.ExecuteAsync());
+            requester.OnComplete += (r, e) => requesters.Remove(requester);
+
+            var routine = StartCoroutine(requester.ExecuteAsync());
+            requesters.Add(requester, routine);
             return requester;
         }
 
-        public IRequester<string> PostRequest(string url, byte[] data, int timeOut, IDictionary<string, string> headers = null)
+        public IRequester<string> PostRequestAsync(string url, byte[] data, int timeOut, IDictionary<string, string> headers = null)
         {
             var requester = new PostRequester(url, data, timeOut, headers);
-            StartCoroutine(requester.ExecuteAsync());
+            requester.OnComplete += (r, e) => requesters.Remove(requester);
+
+            var routine = StartCoroutine(requester.ExecuteAsync());
+            requesters.Add(requester, routine);
             return requester;
+        }
+
+        public void AbortAsync(IRequester requester)
+        {
+            requester.AbortAsync();
+            var routine = requesters[requester];
+            if (routine != null)
+            {
+                StopCoroutine(routine);
+            }
+            requesters.Remove(requester);
+        }
+
+        public void AbortAll()
+        {
+            foreach (var requester in requesters.Keys)
+            {
+                AbortAsync(requester);
+            }
         }
     }
 }

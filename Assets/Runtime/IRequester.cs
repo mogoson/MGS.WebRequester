@@ -15,7 +15,7 @@ using System.Collections;
 
 namespace MGS.WebRequest
 {
-    public interface IRequester<T>
+    public interface IRequester
     {
         string Url { set; get; }
 
@@ -23,16 +23,19 @@ namespace MGS.WebRequest
 
         bool IsDone { get; }
 
-        T Result { get; }
-
         Exception Error { get; }
-
-        event Action<float, T> OnProgress;
-
-        event Action<T, Exception> OnComplete;
 
         IEnumerator ExecuteAsync();
 
         void AbortAsync();
+    }
+
+    public interface IRequester<T> : IRequester
+    {
+        T Result { get; }
+
+        event Action<float, T> OnProgress;
+
+        event Action<T, Exception> OnComplete;
     }
 }
