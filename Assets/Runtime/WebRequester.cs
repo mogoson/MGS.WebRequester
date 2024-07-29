@@ -61,12 +61,15 @@ namespace MGS.WebRequest
         public void AbortAsync(IRequester requester)
         {
             requester.AbortAsync();
-            var routine = requesters[requester];
-            if (routine != null)
+            if (requesters.ContainsKey(requester))
             {
-                StopCoroutine(routine);
+                var routine = requesters[requester];
+                if (routine != null)
+                {
+                    StopCoroutine(routine);
+                }
+                requesters.Remove(requester);
             }
-            requesters.Remove(requester);
         }
 
         public void AbortAll()
