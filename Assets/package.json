@@ -1,7 +1,26 @@
 {
-    "description": "Requester base on UnityWebRequest to get post and download.",
-    "displayName": "Web Requester",
-    "name": "com.mgs.webrequester",
+    "name": "com.mgs.webrequesthub",
+    "version": "1.0.0",
+    "displayName": "Web Request Hub",
+    "description": "Hub to manage Request to get post and download.",
     "unity": "2021.3",
-    "version": "1.0.0"
+    "keywords": [
+        "request",
+        "get",
+        "post",
+        "manage",
+        "hub",
+    ],
+    "author": {
+        "name": "Mogoson",
+        "email": "mogoson@outlook.com",
+        "url": "https://github.com/mogoson"
+    },
+    "samples": [
+        {
+            "displayName": "Sample",
+            "description": "Sample for Hub to manage Request to get post and download.",
+            "path": "Samples~/Sample"
+        }
+    ]
 }

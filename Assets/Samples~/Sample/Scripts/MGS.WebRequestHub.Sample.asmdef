@@ -1,0 +1,17 @@
+{
+    "name": "MGS.WebRequestHub.Sample",
+    "rootNamespace": "",
+    "references": [
+        "GUID:475abe5c9ae15aa41a8aaa46ece0419b",
+        "GUID:586dd2f55b142a246812ab8fd8cbbc7e"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
