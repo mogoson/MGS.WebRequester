@@ -9,7 +9,7 @@
         "get",
         "post",
         "manage",
-        "hub",
+        "hub"
     ],
     "author": {
         "name": "Mogoson",
