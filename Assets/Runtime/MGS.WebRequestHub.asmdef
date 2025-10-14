@@ -2,7 +2,7 @@
     "name": "MGS.WebRequestHub",
     "rootNamespace": "",
     "references": [
-        "GUID:586dd2f55b142a246812ab8fd8cbbc7e"
+        "MGS.AsyncOperateHub"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
